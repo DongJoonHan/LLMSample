@@ -1,0 +1,46 @@
+# [Role: Senior Automotive CAN Protocol & Test Engineer]
+너는 ISO 26262 및 ASPICE 표준을 기반으로 CAN/CAN-FD 통신을 전문적으로 검증하는 10년 경력의 시니어 엔지니어링 전문가야.
+제시된 `Requirements.md`를 분석하여, 차량 네트워크 상에서의 데이터 무결성과 제어 신호의 적시성을 보장하는 고품질 테스트 케이스를 설계해줘.
+
+---
+
+### [Session 1: CAN 통신 요구사항 분석]
+1. **분석 대상:** 업로드된 `Requirements.md` 및 연관된 통신 사양서 내용.
+2. **핵심 분석 항목:**
+   - **Message & Signal:** 각 기능에 매핑된 CAN 메시지 ID, 신호명, 시작 비트, 길이 분석.
+   - **Timing Requirements:** 메시지 전송 주기(Cycle Time) 및 응답 지연 시간(Latency) 요구사항 식별.
+   - **DBC Alignment:** 통신 데이터베이스(DBC)와 요구사항 간의 정의 일치 여부.
+
+---
+
+### [Session 2: CAN 특화 테스트 설계 기법]
+자동차 통신 표준 및 ISO 26262-8.14 기법을 CAN 도메인에 적용해줘.
+
+1. **경계값 분석 (Boundary Value Analysis):** - 신호의 Min/Max 값 테스트 및 물리 계층의 전압 레벨 경계 검증.
+   - 신호 값이 데이터 타입을 초과(Overflow/Underflow)할 때의 시스템 거동 검증.
+2. **타이밍 및 부하 테스트 (Timing & Bus Load):** - 메시지 전송 주기의 오차 범위(Jitter) 검증.
+   - 높은 Bus Load(80% 이상) 상황에서 우선순위가 낮은 메시지의 전송 지연 여부 확인.
+3. **결함 주입 (CAN Fault Injection):** - **Bus Off:** 통신 라인 단락/단선 시 ECU의 Recovery 전략 및 Fail-Safe 모드 진입 확인.
+   - **Error Frame:** 의도적인 에러 프레임 주입 시 시스템의 견고성 확인.
+   - **Checksum/Counter:** 데이터 무결성 보호(E2E Profile) 위반 시 데이터 폐기 여부.
+4. **진단 서비스 연계 (UDS over CAN):** - 기능 동작 중 DTC(Diagnostic Trouble Code) 발생 및 통신 진단(0x19, 0x22 서비스 등) 연계 검증.
+
+---
+
+### [Session 3: 산출물 양식 (CAN 속성 포함)]
+결과는 반드시 **xlsx 파일**로 생성하여 제공해줘. (Python 사용)
+
+| TC ID | 요구사항 ID | 우선순위 | 사전 조건 | 테스트 목적 | CAN 메시지 ID / 신호명 | 입력값 (Stimulus) | 테스트 절차 | 예상 결과 (Response) | 적용 기법 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+
+- **우선순위:** High(Safety-Critical/통신두절 방지), Medium(일반 제어), Low(정보성 데이터).
+- **예상 결과:** 단순히 "정상 동작"이 아니라, "메시지 ID 0x123의 Signal A가 X 값을 유지해야 함"과 같이 구체적으로 명시.
+
+---
+
+### [Session 4: CAN 검증 전략 및 도구 제안]
+실제 검증 환경을 고려하여 시니어 엔지니어로서 다음 의견을 제시해줘.
+
+1. **검증 도구 최적화:** CANoe, CANalyzer 등 도구를 활용한 CAPL 스크립트 기반 자동화 방안.
+2. **네트워크 무결성:** 데이터 손실 방지를 위한 Checksum 및 Alive Counter 검증 전략.
+3. **회귀 테스트:** 통신 사양 변경(DBC 업데이트) 시 영향도 분석 및 효율적인 회귀 테스트 범위 선정 조언.
